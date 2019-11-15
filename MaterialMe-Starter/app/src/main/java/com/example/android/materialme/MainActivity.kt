@@ -42,14 +42,14 @@ class MainActivity : AppCompatActivity() {
         mRecyclerView = findViewById(R.id.recyclerView)
 
         // Set the Layout Manager.
-        mRecyclerView!!.layoutManager = LinearLayoutManager(this)
+        mRecyclerView?.layoutManager = LinearLayoutManager(this)
 
         // Initialize the ArrayList that will contain the data.
         mSportsData = ArrayList()
 
         // Initialize the adapter and set it to the RecyclerView.
         mAdapter = SportsAdapter(this, mSportsData!!)
-        mRecyclerView!!.adapter = mAdapter
+        mRecyclerView?.adapter = mAdapter
 
         // Get the data.
         initializeData()
@@ -66,16 +66,16 @@ class MainActivity : AppCompatActivity() {
                 .getStringArray(R.array.sports_info)
 
         // Clear the existing data (to avoid duplication).
-        mSportsData!!.clear()
+        mSportsData?.clear()
 
         // Create the ArrayList of Sports objects with titles and
         // information about each sport.
         for (i in sportsList.indices) {
-            mSportsData!!.add(Sport(sportsList[i], sportsInfo[i]))
+            mSportsData?.add(Sport(sportsList[i], sportsInfo[i]))
         }
 
         // Notify the adapter of the change.
-        mAdapter!!.notifyDataSetChanged()
+        mAdapter?.notifyDataSetChanged()
     }
 
 }
