@@ -21,9 +21,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-
-import java.util.ArrayList
+import com.bumptech.glide.Glide
+import java.util.*
 
 /***
  * The adapter class for the RecyclerView, contains the sports data.
@@ -91,19 +92,22 @@ internal class SportsAdapter
         // Member Variables for the TextViews
         private val mTitleText: TextView
         private val mInfoText: TextView
+        private val mSportsImage: ImageView?
 
         init {
 
             // Initialize the views.
             mTitleText = itemView.findViewById(R.id.title)
             mInfoText = itemView.findViewById(R.id.subTitle)
+            mSportsImage = itemView.findViewById(R.id.sportsImage)
+
         }
 
         fun bindTo(currentSport: Sport) {
             // Populate the textviews with data.
             mTitleText.text = currentSport.title
             mInfoText.text = currentSport.info
-
+            Glide.with(mContext).load(currentSport.imageResource).into(mSportsImage)
         }
     }
 }

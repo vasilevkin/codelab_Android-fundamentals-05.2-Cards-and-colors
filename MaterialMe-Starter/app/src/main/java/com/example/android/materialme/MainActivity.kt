@@ -16,12 +16,13 @@
 
 package com.example.android.materialme
 
+
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import java.util.*
 
-import java.util.ArrayList
 
 /***
  * Main Activity for the Material Me app, a mock sports news application
@@ -65,14 +66,19 @@ class MainActivity : AppCompatActivity() {
         val sportsInfo = resources
                 .getStringArray(R.array.sports_info)
 
+        val sportsImageResources = resources
+                .obtainTypedArray(R.array.sports_images)
+
         // Clear the existing data (to avoid duplication).
         mSportsData?.clear()
 
         // Create the ArrayList of Sports objects with titles and
         // information about each sport.
         for (i in sportsList.indices) {
-            mSportsData?.add(Sport(sportsList[i], sportsInfo[i]))
+            mSportsData?.add(Sport(sportsList[i], sportsInfo[i], sportsImageResources.getResourceId(i,0)))
         }
+
+        sportsImageResources.recycle()
 
         // Notify the adapter of the change.
         mAdapter?.notifyDataSetChanged()

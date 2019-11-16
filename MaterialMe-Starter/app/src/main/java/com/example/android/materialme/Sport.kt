@@ -38,4 +38,7 @@ internal class Sport
          *
          * @return The info about the sport.
          */
-        val info: String)
+        val info: String,
+
+        val imageResource: Int
+)
