@@ -22,7 +22,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import java.util.*
+    import java.util.*
 
 
 /***
@@ -56,11 +56,23 @@ class MainActivity : AppCompatActivity() {
         // Get the data.
         initializeData()
 
-        val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT.or(ItemTouchHelper.RIGHT)) {
+        val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+                ItemTouchHelper.LEFT
+                        .or(ItemTouchHelper.RIGHT)
+                        .or(ItemTouchHelper.DOWN)
+                        .or(ItemTouchHelper.UP),
+                ItemTouchHelper.LEFT
+                        .or(ItemTouchHelper.RIGHT)) {
             override fun onMove(recyclerView: RecyclerView,
                                 viewHolder: RecyclerView.ViewHolder,
                                 target: RecyclerView.ViewHolder): Boolean {
-                return false
+                val from = viewHolder.adapterPosition
+                val to = target.adapterPosition
+
+                Collections.swap(mSportsData, from, to)
+                mAdapter!!.notifyItemMoved(from, to)
+
+                return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder,
