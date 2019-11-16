@@ -25,6 +25,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import java.util.*
+import android.content.Intent
+
+
 
 /***
  * The adapter class for the RecyclerView, contains the sports data.
@@ -87,7 +90,7 @@ internal class SportsAdapter
      *
      * @param itemView The rootview of the list_item.xml layout file.
      */
-    (itemView: View) : RecyclerView.ViewHolder(itemView) {
+    (itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         // Member Variables for the TextViews
         private val mTitleText: TextView
@@ -101,6 +104,9 @@ internal class SportsAdapter
             mInfoText = itemView.findViewById(R.id.subTitle)
             mSportsImage = itemView.findViewById(R.id.sportsImage)
 
+            // Set the OnClickListener to the entire view.
+            itemView.setOnClickListener(this)
+
         }
 
         fun bindTo(currentSport: Sport) {
@@ -109,5 +115,16 @@ internal class SportsAdapter
             mInfoText.text = currentSport.info
             Glide.with(mContext).load(currentSport.imageResource).into(mSportsImage)
         }
+
+        override fun onClick(v: View?) {
+            val currentSport = mSportsData[adapterPosition]
+
+            val detailIntent = Intent(mContext, DetailActivity::class.java)
+            detailIntent.putExtra("title", currentSport.title)
+            detailIntent.putExtra("image_resource",
+                    currentSport.imageResource)
+            mContext.startActivity(detailIntent)
+        }
+
     }
 }
