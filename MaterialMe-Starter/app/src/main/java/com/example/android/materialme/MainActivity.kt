@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import java.util.*
 
 
@@ -54,6 +55,22 @@ class MainActivity : AppCompatActivity() {
 
         // Get the data.
         initializeData()
+
+        val helper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT.or(ItemTouchHelper.RIGHT)) {
+            override fun onMove(recyclerView: RecyclerView,
+                                viewHolder: RecyclerView.ViewHolder,
+                                target: RecyclerView.ViewHolder): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder,
+                                  direction: Int) {
+                mSportsData!!.removeAt(viewHolder.adapterPosition)
+                mAdapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+            }
+        })
+
+        helper.attachToRecyclerView(mRecyclerView)
     }
 
     /**
